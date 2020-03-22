@@ -25,7 +25,7 @@ function expressionCalculator(expr) {
                 expr = addition(expr);
                 i = 0;
             }
-            if (expr[i] == '-' && i !== 0 || expr[i] == '-' && i !== 1 && expr[0] == '(' || expr[i] == '-' && i !== 1 && expr[0] == '/' || expr[i] == '-' && i !== 1 && expr[0] == '*' || expr[i] == '-' && i !== 1 && expr[0] == '+') {
+            if (expr[i] == '-' && i !== 0 || expr[i] == '-' && i == 1 && expr[0] !== '(' || expr[i] == '-' && i == 1 && expr[0] !== '/' || expr[i] == '-' && i == 1 && expr[0] !== '*' || expr[i] == '-' && i == 1 && expr[0] !== '+') {
                 expr = subtraction(expr);
                 i = 0;
             }
@@ -51,7 +51,7 @@ function expressionCalculator(expr) {
                 i = 0;
             }
     
-            if (subStr[i] == '-' && i !== 0 || subStr[i] == '-' && i !== 1 && subStr[0] == '(' || subStr[i] == '-' && i !== 1 && subStr[0] == '/' || subStr[i] == '-' && i !== 1 && subStr[0] == '*' || subStr[i] == '-' && i !== 1 && subStr[0] == '+') {
+            if (subStr[i] == '-' && i !== 1) {
                 subStr = subtraction(subStr);
                 i = 0;
             }
@@ -139,14 +139,14 @@ function multiplication(str) {
     // } else {
         let firstI = str.indexOf('*') - 1;
         let firstArg = '';
-        while (!isNaN(+(str[firstI] + firstArg)) && str[firstI] !== '+') {
+        while (!isNaN(+(str[firstI] + firstArg)) && str[firstI] !== '+' && str[firstI] !== '-') {
             firstArg = str[firstI] + firstArg;
             firstI--;
         }
 
         let secondI = str.indexOf('*') + 1;
         let secondArg = '';
-        while (!isNaN(+(secondArg + str[secondI]))) {
+        while (!isNaN(+(secondArg + str[secondI])) || secondArg + str[secondI] == '-') {
             secondArg += str[secondI];
             secondI++;
         }
@@ -164,14 +164,14 @@ function division(str) {
     // } else {
         let firstI = str.indexOf('/') - 1;
         let firstArg = '';
-        while (!isNaN(+(str[firstI] + firstArg)) && str[firstI] !== '+') {
+        while (!isNaN(+(str[firstI] + firstArg)) && str[firstI] !== '+' && str[firstI] !== '-') {
             firstArg = str[firstI] + firstArg;
             firstI--;
         }
 
         let secondI = str.indexOf('/') + 1;
         let secondArg = '';
-        while (!isNaN(+(secondArg + str[secondI]))) {
+        while (!isNaN(+(secondArg + str[secondI])) || secondArg + str[secondI] == '-') {
             secondArg += str[secondI];
             secondI++;
         }
